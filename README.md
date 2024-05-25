@@ -1,5 +1,5 @@
 <details open>
-<summary>## Assignment 2</summary>
+<summary><h2>Assignment 2</h2></summary>
 
 ### Steps to run the program
 
