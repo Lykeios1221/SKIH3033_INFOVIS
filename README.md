@@ -1,4 +1,20 @@
 <details open>
+<summary><h2>Assignment 1</h2></summary>
+
+### Required packages:
+* Plotly
+* Numpy
+* Geojson
+
+### To install the required packages, use the following command:
+```bash
+pip install plotly
+pip install numpy
+pip install geojson
+```
+</details>
+
+<details open>
 <summary><h2>Assignment 2</h2></summary>
 
 ### Steps to run the program
