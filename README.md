@@ -12,6 +12,8 @@ pip install plotly
 pip install numpy
 pip install geojson
 ```
+### To run the program, execute the [script](asg1.ipynb) with [all data](data/asg2) remained same relative path.
+
 </details>
 
 <details open>
@@ -29,4 +31,6 @@ pip install geojson
    var data2018 = ee.FeatureCollection("users/<YourOwnID>/data2018"),
        data2023 = ee.FeatureCollection("users/<YourOwnID>/data2023");
 6. Click **Run** and wait for the results in the console.
+
+**Note**: If encountered <b style="color: red;">Computation timed out</b> or <b style="color: red;">Invalid JSON</b> error, just rerun (liked caused by server side problems or poor internet connection).
 </details>
