@@ -105,12 +105,12 @@ var bands = ['B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B11', 'B12'];
 
 // Classification visualize args
 var palette = [
-    '#d63000', // Residential
-    '#a604ff', // Industry
-    '#1488ff', // Water bodies
-    '#00d308', // Forest
-    '#f3f706', // Vegetation
-    '#ffffff', // Primary Transport Network
+    '#d63000',
+    '#a604ff',
+    '#1488ff',
+    '#00d308',
+    '#f3f706',
+    '#bbbbbf',
 ];
 
 var viz = {
@@ -182,7 +182,7 @@ function model(args) {
         .sort('accuracy', false)
         .first();
 
-    print('Best Model:', bestModel);
+    print('Best Model:', bestModel.get('model'));
 
     var tunedModel = modelTuning(
         args.year,
@@ -195,7 +195,7 @@ function model(args) {
     Map.addLayer(
         tunedModel.result,
         viz,
-        'Land Use Classification of Perak ' + args.year + 'by RF'
+        'Land Use Classification of Perak ' + args.year + ' by RF'
     );
 
     return calculateArea(tunedModel.result, args.year);
@@ -322,8 +322,6 @@ print('--------------Final results--------------');
 
 var combinedTable = ee.FeatureCollection(landuseFeatures);
 
-print(combinedTable);
-
 var stackedBarChart = ui.Chart.feature
     .byFeature({
         features: combinedTable.select('[0-5]|Year'),
@@ -344,6 +342,15 @@ var stackedBarChart = ui.Chart.feature
 
 print(stackedBarChart);
 
+var palette = [
+    '#00d308',
+    '#a604ff',
+    '#bbbbbf',
+    '#d63000',
+    '#f3f706',
+    '#1488ff',
+];
+
 var pieChart2018 = ui.Chart.feature
     .byProperty({
         features: [
@@ -353,7 +360,7 @@ var pieChart2018 = ui.Chart.feature
     .setChartType('PieChart')
     .setOptions({
         title: 'Land Use Distribution in 2018',
-        colors: palette.sort(classmap.values()),
+        colors: palette,
     });
 
 var pieChart2023 = ui.Chart.feature
@@ -365,7 +372,7 @@ var pieChart2023 = ui.Chart.feature
     .setChartType('PieChart')
     .setOptions({
         title: 'Land Use Distribution in 2023',
-        colors: palette.sort(classmap.values()),
+        colors: palette,
     });
 
 print(pieChart2018);
