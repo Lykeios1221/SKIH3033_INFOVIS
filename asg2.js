@@ -1,6 +1,7 @@
-var data2018 = ee.FeatureCollection('users/derricksaw123/data2018'),
-    data2023 = ee.FeatureCollection('users/derricksaw123/data2023');
+var data2018 = ee.FeatureCollection('projects/infovisasg02/assets/data2018'),
+    data2023 = ee.FeatureCollection('projects/infovisasg02/assets/data2023');
 
+//STEP01: DATA COLLECTION AND VISUALIZATION
 // Get Region of Interest (ROI), whichi is Perak boundary from Malaysia shp files
 var roi = ee
     .FeatureCollection('FAO/GAUL/2015/level1')
@@ -36,6 +37,7 @@ var visualization = {
     max: 3000,
 };
 
+//STEP02: DATA PREPROCESSING
 function getROIImageWithNDRE(year) {
     var startOfYear = ee.Date(year + '-01-01');
     var endOfYear = startOfYear.advance(1, 'year');
@@ -87,6 +89,7 @@ function getROIImageWithNDRE(year) {
     return resampledImage;
 }
 
+//STEP03: MODEL CLASSIFICATION
 var dataset = [
     {
         year: 2018,
@@ -169,6 +172,7 @@ function model(args) {
         evaluateModel(args.image, testing, gbClf, 'Gradient Boosting', null)
     );
 
+//STEP04: MODEL EVALUATION AND HYPERPRAMETER TUNING
     var bestModel = ee
         .FeatureCollection(
             ee.List(results).map(function (dict) {
@@ -220,6 +224,15 @@ function evaluateModel(img, testing, clf, name, layerName) {
     print("User's Accuracy:", usersAccuracy);
     print('Kappa Coefficient:', kappa);
 
+var confusionMatrixChart = ui.Chart.array.values(confusionMatrix.array(), 0)
+        .setChartType('Table')
+        .setOptions({
+            title: 'Confusion Matrix for ' + name,
+            hAxis: { title: 'Predicted Class' },
+            vAxis: { title: 'Actual Class' },
+        });
+
+    print(confusionMatrixChart);
     return {
         model: clf,
         result: classificationResult,
@@ -297,6 +310,7 @@ function modelTuning(year, image, model, training, testing) {
     );
 }
 
+//STEP05: LULC VISUALIZATION AND ANALYSIS
 function calculateArea(result, year) {
     var classArea = ee.Dictionary(
         result
