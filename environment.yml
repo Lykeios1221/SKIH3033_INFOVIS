@@ -1,0 +1,16 @@
+# Micromamba environment file
+# https://marketplace.visualstudio.com/items?itemName=corker.vscode-micromamba
+
+name: default
+
+channels:
+  - conda-forge
+
+dependencies:
+  - jupyter-packaging
+  - jupyterlab
+  - nodejs
+  - pytest
+  - pytest-check-links
+  - python
+  - yarn
